@@ -1,0 +1,61 @@
+version: 0.2
+
+env:
+  shell: bash
+  variables:
+    AWS_NUKE_VERSION: 2.19.0
+    DOCKER_COMPOSE_VERSION: 2.10.2
+    DOCKER_VERSION: 20.10.18
+    GO_VERSION: 1.18.2
+    GOSS_VERSION: 0.3.18
+    POETRY_VERSION: 1.2.2
+    SBT_VERSION: 0.13.18
+    SCALA_VERSION: 2.12.10
+    TERRAFORM_DOCS_VERSION: 0.16.0
+batch:
+  fast-fail: true
+  # PYTHON_RUNTIME determines the runtime used by the CodeBuild build container
+  # It is separate and not related to the PYTHON_VERSION
+  build-list:
+    - identifier: "py3_9_15__tf1_3_2__tg0_39_2"
+      env:
+        variables:
+          PYTHON_RUNTIME: 3.9
+          PYTHON_VERSION: 3.9.15
+          TERRAFORM_VERSION: 1.3.2
+          TERRAGRUNT_VERSION: 0.39.2
+      ignore-failure: false
+    - identifier: "py3_10_8__tf1_3_2__tg0_39_2"
+      env:
+        variables:
+          PYTHON_RUNTIME: 3.9
+          PYTHON_VERSION: 3.10.8
+          TERRAFORM_VERSION: 1.3.2
+          TERRAGRUNT_VERSION: 0.39.2
+      ignore-failure: false
+
+phases:
+  install:
+    runtime-versions:
+      python: ${PYTHON_RUNTIME}
+    commands:
+      - cd $(pyenv root) && git stash && git pull && cd -
+      - pyenv install -s ${PYTHON_VERSION}
+      - curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
+      - export PATH="/etc/poetry/bin:$PATH"
+      - poetry --version
+      - apt-get install wget apt-transport-https gnupg
+      - wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add -
+      - echo deb https://aquasecurity.github.io/trivy-repo/deb bionic main | tee -a /etc/apt/sources.list.d/trivy.list
+      - apt-get update
+      - apt-get install -y trivy
+  pre_build:
+    commands:
+      - export PYENV_VERSION=${PYTHON_VERSION}
+      - poetry env use ${PYTHON_VERSION}
+      - make setup
+  build:
+    commands:
+      - export PYENV_VERSION=${PYTHON_VERSION}
+      - poetry env use ${PYTHON_VERSION}
+      - make build

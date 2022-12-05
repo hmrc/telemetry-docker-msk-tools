@@ -1,0 +1,11 @@
+# Use https://avd.aquasec.com/nvd/cve-xxxx-xxxx for further details on CVEs
+# Accept the risk - we don't use consul
+CVE-2020-7219
+CVE-2020-25864
+
+# Accept the risk - we don't use k8s
+CVE-2019-11250
+CVE-2020-8565
+
+# Accept the risk - we don't encrypt multi-GB of data
+CVE-2020-36242
