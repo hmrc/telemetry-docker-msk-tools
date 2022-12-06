@@ -11,6 +11,7 @@ This repository is responsible for building the topicctl Go binary into a Docker
 * [topicctl GitHub Repo](https://github.com/segmentio/topicctl)
 * [Running AWS ECS Exec](https://aws.amazon.com/blogs/containers/new-using-amazon-ecs-exec-access-your-containers-fargate-ec2/)
 * [ECS Exec in JetBrains AWS Toolkit](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/ecs-exec.html)
+* [Using tini](https://computingforgeeks.com/use-tini-init-system-in-docker-containers/)
 
 ## License
 

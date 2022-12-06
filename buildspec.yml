@@ -1,0 +1,19 @@
+version: 0.2
+
+env:
+  shell: bash
+  variables:
+    DOCKER_VERSION: 20.10.18
+phases:
+  install:
+    runtime-versions:
+      python: ${PYTHON_RUNTIME}
+    commands:
+      - apt-get install -y wget apt-transport-https gnupg
+      - wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add -
+      - echo deb https://aquasecurity.github.io/trivy-repo/deb bionic main | tee -a /etc/apt/sources.list.d/trivy.list
+      - apt-get update
+      - apt-get install -y trivy
+  build:
+    commands:
+      - make build

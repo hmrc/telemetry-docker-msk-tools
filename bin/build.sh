@@ -3,11 +3,6 @@ set -eo pipefail
 
 export DOCKER_BUILDKIT=1
 
-if [[ -z "${GO_VERSION}" ]]; then
-  echo "GO_VERSION not set"
-  exit 1
-fi
-
 if [[ -z "${TOPICCTL_VERSION}" ]]; then
   echo "TOPICCTL_VERSION not set"
   exit 1
@@ -22,7 +17,6 @@ docker build --tag "$IMAGE_NAME:$IMAGE_TAG" \
              --platform "${DOCKER_DEFAULT_PLATFORM}" \
              --build-arg BUILDKIT_INLINE_CACHE=1 \
              --build-arg DOCKER_DEFAULT_PLATFORM="${DOCKER_DEFAULT_PLATFORM}" \
-             --build-arg GO_VERSION="${GO_VERSION}" \
              --build-arg TOPICCTL_VERSION="${TOPICCTL_VERSION}" \
              .
 
