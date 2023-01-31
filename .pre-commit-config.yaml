@@ -3,8 +3,18 @@ repos:
     hooks:
       - id: validate-tool-versions
         name: Validate tool versions
-        entry: ./bin/check_tool_versions.sh
+        entry: ./tools/check-tool-versions.sh
         language: script
+        pass_filenames: false
+      - id: validate-cruft-up-to-date
+        name: Validate Cruft up-to-date
+        entry: cruft check
+        language: system
+        pass_filenames: false
+      - id: validate-cruft-no-diff
+        name: Validate Cruft drift
+        entry: cruft diff --exit-code
+        language: system
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
@@ -20,6 +30,8 @@ repos:
         name: Check for broken symlinks
       - id: check-json
         name: Check for valid JSON
+      - id: check-toml
+        name: Check for valid TOML
       - id: check-yaml
         name: Check for valid YAML
       - id: detect-private-key
@@ -28,15 +40,15 @@ repos:
         name: Fix trailing whitespaces
       - id: end-of-file-fixer
         name: Fix missing end-of-file line returns
-        exclude: repository.yaml
+        exclude: repository.yaml|tests/unit/test-data/
   - repo: https://github.com/hmrc/security-git-hooks
     rev: release/1.9.0
     hooks:
       - id: secrets_filecontent
         name: Checking staged files for sensitive content
         exclude: ".tar$|.gz$|.jar$|.7z$|.rar$|.bz2$|.zip$|.gzip$|.war$|.ear$|.xlsx$|.xls$|
-                  |.docx$|.doc$|.pptx$|.pdf$|.jpg$|.png$|.jpeg$|.tif$|.tiff$|.gif$|.bmp$|.webp$|.svg$|.ico$|.psd$|.exe$|.dll$|.dmg$|.de$|.rpm$"
+                    |.docx$|.doc$|.pptx$|.pdf$|.jpg$|.png$|.jpeg$|.tif$|.tiff$|.gif$|.bmp$|.webp$|.svg$|.ico$|.psd$|.exe$|.dll$|.dmg$|.de$|.rpm$"
       - id: secrets_filename
         name: Checking staged files for sensitive file types
         exclude: ".tar$|.gz$|.jar$|.7z$|.rar$|.bz2$|.zip$|.gzip$|.war$|.ear$|.xlsx$|.xls$|
-                  |.docx$|.doc$|.pptx$|.pdf$|.jpg$|.png$|.jpeg$|.tif$|.tiff$|.gif$|.bmp$|.webp$|.svg$|.ico$|.psd$|.exe$|.dll$|.dmg$|.de$|.rpm$"
+                    |.docx$|.doc$|.pptx$|.pdf$|.jpg$|.png$|.jpeg$|.tif$|.tiff$|.gif$|.bmp$|.webp$|.svg$|.ico$|.psd$|.exe$|.dll$|.dmg$|.de$|.rpm$"

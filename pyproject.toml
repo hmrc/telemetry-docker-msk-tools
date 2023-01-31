@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "telemetry-docker-topicctl"
+version = "0.1.0"
+description = "Responsible for building the topicctl Go binary into a Docker image"
+authors = ["Team Telemetry <telemetry@digital.hmrc.gov.uk>"]
+license = "Apache 2.0"
+readme = "README.md"
+packages = [{include = "telemetry_docker_topicctl"}]
+
+[[tool.poetry.source]]
+name = "artifactory"
+url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple/"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+cruft = "^2.12.0"
+cookiecutter = "^2.1.1"
+bandit = "^1.7.4"
+black = "^22.12.0"
+pre-commit = "^3.0.2"
+version-incrementor = "^1.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
