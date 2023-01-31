@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/hmrc/telemetry-docker-resources",
-  "commit": "6e5e405bebdaddf2d720fb191e77c93fbaf25676",
+  "commit": "cd757b802bf16c317c5f70ad822b6d5af1b3e538",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -9,10 +9,22 @@
       "docker_name": "telemetry-docker-topicctl",
       "docker_name_formatted": "telemetry-docker-topicctl",
       "internal_base_account_id": "634456480543",
-      "additional_docker_build_info": {},
       "additional_tool_versions": {
         "golang": {
           "version": "1.19.3"
+        }
+      },
+      "additional_docker_build_info": {
+        "-default": {
+          "build_args": [
+            "BUILDKIT_INLINE_CACHE=1",
+            "DOCKER_DEFAULT_PLATFORM='linux/amd64'",
+            "GO_VERSION=1.19.3",
+            "TOPICCTL_VERSION=latest"
+          ],
+          "platform": [
+            "'linux/amd64'"
+          ]
         }
       },
       "_template": "https://github.com/hmrc/telemetry-docker-resources"
