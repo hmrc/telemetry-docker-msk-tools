@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+### WARNING! This is a generated file and should ONLY be edited in https://github.com/hmrc/telemetry-docker-resources
+
 # A helper tool to assist us maintaining docker functions
 # Intention here is to keep this files and all its functions reusable for all Telemetry repositories
 
@@ -31,6 +33,11 @@ cut_release() {
 package() {
   print_begins
   export_version
+
+  echo Export poetry packages
+  rm -fv requirements.txt requirements-tests.txt
+  poetry export --without-hashes --format requirements.txt --output "requirements.txt"
+  poetry export --without-hashes --format requirements.txt --with dev --output "requirements-tests.txt"
 
   echo Building the images
   docker build --tag "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-topicctl:${VERSION}" --platform 'linux/amd64' --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64' --build-arg GO_VERSION=1.19.3 --build-arg TOPICCTL_VERSION=latest .
