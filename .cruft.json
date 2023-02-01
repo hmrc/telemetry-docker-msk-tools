@@ -1,33 +1,23 @@
 {
   "template": "https://github.com/hmrc/telemetry-docker-resources",
-  "commit": "a8f04656f531b6cb74440955431f48658e4b0385",
+  "commit": "0fca28c6f20297716bf505e1a97b1aad4eef25e5",
   "checkout": null,
   "context": {
     "cookiecutter": {
+      "aws_account_id": "634456480543",
       "aws_region": "eu-west-2",
       "custom_makefile_name": "",
-      "docker_name": "telemetry-docker-topicctl",
-      "docker_name_formatted": "telemetry-docker-topicctl",
-      "internal_base_account_id": "634456480543",
+      "docker_image_name": "telemetry-docker-topicctl",
+      "docker_image_name_formatted": "telemetry-docker-topicctl",
+      "docker_include_default_build": "true",
+      "repository_name": "telemetry-docker-topicctl",
       "additional_tool_versions": {
         "golang": {
           "version": "1.19.3"
         }
       },
-      "docker_build_info_additional": {},
-      "docker_build_info_default": {
-        "default": {
-          "build_args": [
-            "BUILDKIT_INLINE_CACHE=1",
-            "DOCKER_DEFAULT_PLATFORM='linux/amd64'",
-            "GO_VERSION=1.19.3",
-            "TOPICCTL_VERSION=latest"
-          ],
-          "platform": [
-            "'linux/amd64'"
-          ]
-        }
-      },
+      "docker_build_options_additional": {},
+      "docker_build_options_default": "--platform 'linux/amd64' --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64' --build-arg GO_VERSION=1.19.3 --build-arg TOPICCTL_VERSION=latest",
       "_template": "https://github.com/hmrc/telemetry-docker-resources"
     }
   },

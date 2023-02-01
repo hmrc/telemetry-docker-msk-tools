@@ -9,85 +9,51 @@ set -o nounset
 #####################################################################
 ## Beginning of the configurations ##################################
 
-ACCOUNT_ID="634456480543"
-AWS_REGION="eu-west-2"
 BASE_LOCATION="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PATH_BUILD="${BASE_LOCATION}/build"
-PROJECT_FULL_NAME="telemetry-docker-topicctl"
-REPO_NAME="telemetry-docker-topicctl"
+IMAGE_NAME="telemetry-docker-topicctl"
 
 ## End of the configurations ########################################
 #####################################################################
 
 debug_env(){
   echo BASE_LOCATION="${BASE_LOCATION}"
-  echo PROJECT_FULL_NAME="${PROJECT_FULL_NAME}"
-  echo PATH_BUILD="${PATH_BUILD}"
-}
-
-open_shell() {
-    print_begins
-
-    poetry export --without-hashes --format requirements.txt --with dev --output "requirements-tests.txt"
-    docker run -it \
-               --rm \
-               --volume "${BASE_LOCATION}":/data \
-               --workdir /data \
-               --env REQUIREMENTS_FILE="requirements-tests.txt" \
-               --env VENV_NAME="venv" \
-               python:$(cat "${BASE_LOCATION}/.python-version")-slim-buster /data/bin/entrypoint.sh /bin/bash
-
-    print_completed
+  echo IMAGE_NAME="${IMAGE_NAME}"
 }
 
 # Creates a release tag in the repository
 cut_release() {
   print_begins
-
   poetry run cut-release
-
   print_completed
 }
 
 # Build the Docker image
 package() {
   print_begins
-
   export_version
 
   echo Building the images
-
-
-  docker build --tag "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPO_NAME}:${VERSION}" --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64' --build-arg GO_VERSION=1.19.3 --build-arg TOPICCTL_VERSION=latest --platform 'linux/amd64' .
-
-
-
-
+  docker build --tag "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-topicctl:${VERSION}" --platform 'linux/amd64' --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64' --build-arg GO_VERSION=1.19.3 --build-arg TOPICCTL_VERSION=latest .
   print_completed
 }
 
 # Bump the function's version when appropriate
 prepare_release() {
   print_begins
-
   poetry run prepare-release
   export_version
-
   print_completed
 }
 
 publish_to_ecr() {
   print_begins
-
   export_version
 
   echo Authenticating with ECR
-  aws ecr get-login-password --region "${AWS_REGION}" | docker login --username AWS --password-stdin "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+  aws ecr get-login-password --region "eu-west-2" | docker login --username AWS --password-stdin "634456480543.dkr.ecr.eu-west-2.amazonaws.com"
+
   echo Pushing the images
-
-  docker push "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPO_NAME}:${VERSION}"
-
-
+  docker push "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-topicctl:${VERSION}"
   print_completed
 }
 
@@ -128,8 +94,7 @@ print_completed() {
 
 print_configs() {
   echo -e "BASE_LOCATION:\t\t\t${BASE_LOCATION}"
-  echo -e "PATH_BUILD:\t\t\t${PATH_BUILD}"
-  echo -e "PROJECT_FULL_NAME:\t\t${PROJECT_FULL_NAME}"
+  echo -e "IMAGE_NAME:\t\t${IMAGE_NAME}"
 }
 
 ## End of the helper methods ########################################
@@ -141,11 +106,8 @@ main() {
   # Validate command arguments
   [ "$#" -ne 1 ] && help && exit 1
   function="$1"
-  functions="help cut_release debug_env open_shell package prepare_release print_configs publish_to_ecr"
+  functions="help cut_release debug_env package prepare_release print_configs publish_to_ecr"
   [[ $functions =~ (^|[[:space:]])"$function"($|[[:space:]]) ]] || (echo -e "\n\"$function\" is not a valid command. Try \"$0 help\" for more details" && exit 2)
-
-  # Ensure build folder is available
-  mkdir -p "${PATH_BUILD}"
 
   $function
 }
