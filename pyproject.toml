@@ -15,10 +15,10 @@ url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple/"
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-cruft = "^2.12.0"
-cookiecutter = "^2.1.1"
 pre-commit = "^3.0.2"
 version-incrementor = "^1.7.0"
+cookiecutter = "^2.4.0"
+cruft = "^2.15.0"
 
 [build-system]
 requires = ["poetry-core"]
