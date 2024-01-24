@@ -12,7 +12,7 @@ set -o nounset
 ## Beginning of the configurations ##################################
 
 BASE_LOCATION="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-IMAGE_NAME="telemetry-docker-topicctl"
+IMAGE_NAME="telemetry-docker-msk-tools"
 
 ## End of the configurations ########################################
 #####################################################################
@@ -40,7 +40,7 @@ package() {
   poetry export --without-hashes --format requirements.txt --with dev --output "requirements-tests.txt"
 
   echo Building the images
-  docker build --tag "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-topicctl:${VERSION}" --platform 'linux/amd64' --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64' --build-arg GO_VERSION=1.19.3 --build-arg TOPICCTL_VERSION=latest .
+  docker build --tag "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-msk-tools:${VERSION}" --platform 'linux/amd64' --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64' .
   print_completed
 }
 
@@ -60,7 +60,7 @@ publish_to_ecr() {
   aws ecr get-login-password --region "eu-west-2" | docker login --username AWS --password-stdin "634456480543.dkr.ecr.eu-west-2.amazonaws.com"
 
   echo Pushing the images
-  docker push "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-topicctl:${VERSION}"
+  docker push "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-msk-tools:${VERSION}"
   print_completed
 }
 

@@ -7,11 +7,11 @@
       "aws_account_id": "634456480543",
       "aws_region": "eu-west-2",
       "custom_makefile_name": "",
-      "docker_build_options_default": "--platform 'linux/amd64' --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64' --build-arg GO_VERSION=1.19.3 --build-arg TOPICCTL_VERSION=latest",
-      "docker_image_name": "telemetry-docker-topicctl",
-      "docker_image_name_formatted": "telemetry-docker-topicctl",
+      "docker_build_options_default": "--platform 'linux/amd64' --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64'",
+      "docker_image_name": "telemetry-docker-msk-tools",
+      "docker_image_name_formatted": "telemetry-docker-msk-tools",
       "docker_include_default_build": true,
-      "repository_name": "telemetry-docker-topicctl",
+      "repository_name": "telemetry-docker-msk-tools",
       "additional_tool_versions": {
         "golang": "1.19.3"
       },

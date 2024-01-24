@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "telemetry-docker-topicctl"
+name = "telemetry-docker-msk-tools"
 version = "0.1.0"
-description = "Responsible for building the topicctl Go binary into a Docker image"
+description = "Responsible for adding the topicctl & kaf golang binaries into a Docker image"
 authors = ["Team Telemetry <telemetry@digital.hmrc.gov.uk>"]
 license = "Apache 2.0"
 readme = "README.md"
-packages = [{include = "telemetry_docker_topicctl"}]
+packages = [{include = "telemetry_docker_msk_tools"}]
 
 [[tool.poetry.source]]
 name = "artifactory"
