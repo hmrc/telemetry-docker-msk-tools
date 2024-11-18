@@ -40,7 +40,7 @@ package() {
   poetry export --without-hashes --format requirements.txt --with dev --output "requirements-tests.txt"
 
   echo Building the images
-  docker build --tag "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-msk-tools:${VERSION}" --platform 'linux/amd64' --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64' .
+  docker build --tag "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-msk-tools:${VERSION}" --tag "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-msk-tools:latest" --platform 'linux/amd64' --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg DOCKER_DEFAULT_PLATFORM='linux/amd64' .
   print_completed
 }
 
@@ -61,6 +61,7 @@ publish_to_ecr() {
 
   echo Pushing the images
   docker push "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-msk-tools:${VERSION}"
+  docker push "634456480543.dkr.ecr.eu-west-2.amazonaws.com/telemetry-docker-msk-tools:latest"
   print_completed
 }
 
