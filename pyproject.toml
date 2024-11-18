@@ -18,7 +18,6 @@ python = "^3.10"
 pre-commit = "^3.0.2"
 version-incrementor = "^1.7.0"
 cookiecutter = "^2.5.0"
-cruft = "^2.15.0"
 
 [build-system]
 requires = ["poetry-core"]
