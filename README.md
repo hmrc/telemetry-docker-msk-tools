@@ -5,7 +5,6 @@
 This repository is responsible for building the topicctl & kaf golang binaries into a Docker image that is compatible with running
 `AWS ECS exec` in Fargate
 
-
 ## References
 
 * [topicctl GitHub Repo](https://github.com/segmentio/topicctl)
