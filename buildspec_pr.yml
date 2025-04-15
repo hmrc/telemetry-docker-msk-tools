@@ -11,7 +11,5 @@ phases:
       - make setup
   build:
     commands:
-      - echo "$CODEBUILD_WEBHOOK_BASE_REF"
-      - echo "$CODEBUILD_WEBHOOK_HEAD_REF"
       - PIP_INDEX_URL=https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple poetry run pre-commit run --all-files --verbose
       - make verify
