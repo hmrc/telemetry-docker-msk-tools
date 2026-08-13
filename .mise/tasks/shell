@@ -8,4 +8,4 @@ export IMAGE_VERSION=${VERSION:-0}
 
 docker run --rm --interactive --tty \
            --platform 'linux/amd64' \
-           "${IMAGE_REPO}/${IMAGE_NAME}:latest" /bin/sh
+           "${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_VERSION}" /bin/sh
