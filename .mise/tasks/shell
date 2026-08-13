@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#MISE description="Open a shell terminal to the test and package Docker container"
+#MISE depends=["setup", "package"]
+#MISE raw=true
+
+VERSION=$(cat .version)
+export IMAGE_VERSION=${VERSION:-0}
+
+docker run --rm --interactive --tty \
+           --platform 'linux/amd64' \
+           "${IMAGE_REPO}/${IMAGE_NAME}:latest" /bin/sh
