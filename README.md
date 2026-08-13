@@ -4,6 +4,33 @@
 
 This repository is responsible for building the topicctl & kaf golang binaries into a Docker image that is compatible with running
 `AWS ECS exec` in Fargate
+## Table of Contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Prerequisites](#prerequisites)
+- [Quick start](#quick-start)
+- [References](#references)
+- [License](#license)
+
+<!-- END doctoc -->
+
+## Prerequisites
+
+* [mise](https://mise.jdx.dev/) to manage tool versions and integrates with `uv`.
+* [uv](https://docs.astral.sh/uv/) to manage Python virtual environments and dependencies.
+
+## Quick start
+
+Install dependencies using uv:
+
+```shell
+mise run setup
+# Run tests:
+mise run test
+# Package the lambda locally:
+mise run package
+```
 
 ## References
 
