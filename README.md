@@ -26,7 +26,7 @@ Install dependencies using uv:
 
 ```shell
 mise run setup
-# Run tests:
+# Run tests, first assume a role in internal-base as appropriate
 mise run test
 # Package the lambda locally:
 mise run package

@@ -1,26 +1,14 @@
 #!/usr/bin/env bash
 #MISE description="Prepare dependencies and run unit tests in a Docker environment"
-#MISE depends=["setup", "bandit", "black"]
+#MISE depends=["package"]
 #MISE raw=true
 
-PYTHON_VERSION=$(python --version | awk '{print $2}')
-PYTHON_VERSION_LIB=$(cut -d '.' -f 1,2 <<< "${PYTHON_VERSION}")
+VERSION=$(cat .version)
+export IMAGE_VERSION=${VERSION:-0}
 
-uv export --format requirements.txt \
-          --index-url "${PIP_INDEX_URL}" \
-          --no-annotate \
-          --no-hashes \
-          --no-header \
-          --output-file "requirements-tests.txt" \
-          --quiet
+aws ecr get-login-password --region "eu-west-2" | docker login --username AWS --password-stdin "${IMAGE_REPO}"
 
 docker run --rm \
            --tty \
            --platform 'linux/amd64' \
-           --volume "${MISE_CONFIG_ROOT}:/data" \
-           --workdir /data \
-           --env PIP_INDEX_URL="${PIP_INDEX_URL}" \
-           --env PYTHON_VERSION_LIB="${PYTHON_VERSION_LIB}" \
-           --env REQUIREMENTS_FILE="requirements-tests.txt" \
-           --env VENV_NAME="venv_test" \
-           "${DOCKER_REPO}/python:${PYTHON_VERSION}-slim-bookworm" /data/bin/entrypoint.sh /data/bin/test.sh
+           "${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_VERSION}" /bin/topicctl --version
